@@ -16,3 +16,4 @@ Project-Todo App is a web application built with Angular and Spring Boot that al
 - **Build Tool:** Maven
 - **Version Control:** GitHub
 
+![Image Alt Text](image_url)
