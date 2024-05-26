@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  myEventEmitter: EventEmitter<any> = new EventEmitter();
 
-
- 
-  public loginStatusSubject = new Subject<boolean>();
 
   baseUrl = 'http://localhost:8082/auth';
 
@@ -36,13 +34,14 @@ export class AuthService {
   public loginUser(token) {
     localStorage.setItem('token', token);
     this.flag=true;
+
     return true;
   }
 
   //isLogin: user is logged or not
   public isloggedin() {
     if(localStorage.getItem('user')){
-      return true;
+
     }
    
   }
@@ -51,6 +50,7 @@ export class AuthService {
   public logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
     return true;
   }
 
@@ -71,12 +71,9 @@ export class AuthService {
   //get userDetails
   public getUser() {
     let userStr = localStorage.getItem("user");
-    // if (userStr != null) {
-    //   return JSON.parse(userStr);
-    // } else {
-    //   this.logout();
-    //   return null;
-    // }
+  }
+  triggerEvent(): void {
+    this.myEventEmitter.emit(true);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     email:'',
     password:''
   };
+  @Output() loggedIn = new EventEmitter<boolean>();
 
   constructor(private snack: MatSnackBar, private login: AuthService, private router: Router) { }
 
@@ -46,9 +47,11 @@ export class LoginComponent implements OnInit {
       (data: any) => {
         if(!data.details)
         {
+          this.login.triggerEvent();
           this.login.loginUser(data.token);
           this.login.navigationlogin();
           this.router.navigate(['/home']);
+          this.loggedIn.emit(true);
         }else{
           data.details.forEach((element) => {
             var key = Object.keys(element)[0];
