@@ -2,6 +2,9 @@
 
 ## Overview
 Project-Todo App is a web application built with Angular and Spring Boot that allows users to manage projects and their associated todos. Users can create, update, delete, and view projects and todos. Additionally, project summaries can be exported to GitHub Gists.
+![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20004910.png)
+![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20012322.png)
+![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20012404.png)
 
 ## Features
 - Create, update, delete, and view projects
@@ -16,7 +19,4 @@ Project-Todo App is a web application built with Angular and Spring Boot that al
 - **Build Tool:** Maven
 - **Version Control:** GitHub
 
-![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20004910.png)
-![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20012322.png)
-![Image Alt Text](https://github.com/Snobin/project-todo-app/blob/main/Screenshot%202024-05-27%20012404.png)
 
