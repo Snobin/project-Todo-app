@@ -11,6 +11,7 @@
             <mat-toolbar >
                 <span>{{ i + 1 }}. {{ todo.description }}</span>
                 <span class="spacer"></span>
+                <span class="timestamp">{{ todo.createdDate | date:'short' }}</span>
                 <button mat-icon-button color="primary" (click)="editTodo(todo.id)">
                     <mat-icon>edit</mat-icon>
                 </button>
@@ -26,6 +27,7 @@
             <mat-toolbar >
                 <span>{{ i + 1 }}. {{ todo.description }}</span>
                 <span class="spacer"></span>
+                <span class="timestamp">{{ todo.createdDate | date:'short' }}</span>
                 <button mat-icon-button color="primary" (click)="editTodo(todo.id)">
                     <mat-icon>edit</mat-icon>
                 </button>
