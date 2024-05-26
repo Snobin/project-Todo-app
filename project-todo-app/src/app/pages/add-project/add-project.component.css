@@ -1,0 +1,20 @@
+
+.error-msg-span{
+    color:red;
+}.row {
+    width: 40%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

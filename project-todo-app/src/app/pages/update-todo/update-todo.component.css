@@ -1,0 +1,26 @@
+.add-todo-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.row {
+    width: 50%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}

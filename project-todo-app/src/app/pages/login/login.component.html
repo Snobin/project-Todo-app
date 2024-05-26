@@ -1,0 +1,49 @@
+<div class="bootstrap-wrapper bg-image h-92 p-50">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6 offset-md-3">
+                <mat-card class="card-bg">
+                  
+                    <h1 class="text-center">Login</h1>
+                    <form>
+                        <span class="error">{{validationMessage.email}}</span>
+                    <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Username</mat-label>
+                            <input
+                                [(ngModel)]="loginData.email"
+                                name="email"
+                                required
+                                matInput
+                                placeholder="Enter here" />
+                        </mat-form-field>
+                        <span class="error">{{validationMessage.password}}</span>
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Password</mat-label>
+                            <input
+                                [(ngModel)]="loginData.password"
+                                [type]="hidePassword ? 'password' : 'text'"
+                                name="password"
+                                required
+                                matInput
+                                placeholder="Enter here" />
+                            <mat-icon class="pointer" matSuffix
+                                (click)="togglePasswordVisibility()">
+                                {{hidePassword?'visibility_off':'visibility'}}
+                            </mat-icon>
+                        </mat-form-field>
+                        <div class="container text-center">
+                            <button mat-raised-button color="primary"
+                                (click)="formSubmit()">
+                                Login
+                            </button>
+                            <button class="ml10" mat-raised-button
+                                color="accent" (click)="signup()">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

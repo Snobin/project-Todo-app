@@ -1,0 +1,24 @@
+<div class="p-10 pl-0 pb-20 text-center">
+    <div class="h-92 scroll-div text-center">
+        <h1 class="text-center">Projects</h1>
+        <mat-card class="mt10 mrp20 mlp20  " *ngFor="let q of projectdata">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"> </div>
+                <mat-card-title>
+                    Project Name :{{q.title}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+                <button [routerLink]="'/todo-list/'+q.id" mat-flat-button color="primary">View-Todo</button>
+                <button [routerLink]="'/todo/'+q.id" mat-flat-button color="primary" class="ml20">Add-Todo</button>
+                <button [routerLink]="'/update-project/'+ q.id" mat-flat-button color="primary"
+                    class="ml20">Update</button>
+                <button mat-flat-button color="warn" class="ml20" (click)="deleteProject(q.id)">Delete</button>
+                <button mat-flat-button color="warn" class="ml20" (click)="export(q.id)">Export Gist</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    <div class="container text-center mt20 mb-10">
+        <button routerLink="/add-project" mat-raised-button color="primary">Add Project</button>
+    </div>
+</div>

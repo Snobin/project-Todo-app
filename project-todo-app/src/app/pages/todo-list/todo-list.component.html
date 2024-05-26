@@ -1,0 +1,48 @@
+<mat-card class="todo-list-card ">
+    <h1 class="text-center bold-heading">Todo List</h1>
+    <div class="container">
+      <div class="row justify-content-center mlp20 mrp20">
+        <div class="col-md-8">
+          <h2 class="bold-heading">Project: {{ projectTitle }}</h2>
+          <p class="bold-heading">Project Summary: {{ completedTodos.length }}/{{ totalTodosCount }} todos completed</p>
+          
+          <h3 class="bold-heading">Pending Todos</h3>
+          <div *ngFor="let todo of pendingTodos; let i = index">
+            <mat-toolbar >
+                <span>{{ i + 1 }}. {{ todo.description }}</span>
+                <span class="spacer"></span>
+                <button mat-icon-button color="primary" (click)="editTodo(todo.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <mat-checkbox (change)="markAsComplete(todo.id)"></mat-checkbox>
+            </mat-toolbar>
+          </div>
+  
+          <h3 class="bold-heading">Completed Todos</h3>
+          <div *ngFor="let todo of completedTodos; let i = index">
+            <mat-toolbar >
+                <span>{{ i + 1 }}. {{ todo.description }}</span>
+                <span class="spacer"></span>
+                <button mat-icon-button color="primary" (click)="editTodo(todo.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <mat-checkbox [checked]="true"(change)="markAsPending(todo.id)" ></mat-checkbox>
+            </mat-toolbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <div class="container text-center mt20 mb-10">
+    <button (click)="addTodo()" mat-raised-button
+        color="primary">Add Todo</button>
+        <button mat-flat-button color="primary" class="ml10" (click)="export()" >Export Gist</button>
+
+</div>
+  
