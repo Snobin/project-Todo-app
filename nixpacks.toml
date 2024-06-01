@@ -1,22 +1,23 @@
 [build]
   [[steps]]
-  name = "Build Angular"
-  builder = "node"
-  dir = "project-todo-app"
-  cmd = "npm install && npm run build"
-
+    name = "Build Angular"
+    builder = "node"
+    dir = "project-todo-app/project-todo-app"
+    cmd = "npm install && npm run build"
+  
   [[steps]]
-  name = "Build Spring Boot"
-  builder = "java"
-  dir = "Project-Management"
-  [steps.env]
-  MAVEN_OPTS = "-Dmaven.repo.local=/opt/maven"
+    name = "Build Spring Boot"
+    builder = "java"
+    dir = "project-todo-app/Project-Management"
+    cmd = "mvn clean package -DskipTests"
+    [steps.env]
+      MAVEN_OPTS = "-Dmaven.repo.local=/opt/maven"
 
 [start]
   [[steps]]
-  name = "Start Spring Boot"
-  cmd = "java -jar Project-Management/target/*.jar"
-
+    name = "Start Spring Boot"
+    cmd = "java -jar project-todo-app/Project-Management/target/*.jar"
+  
   [[steps]]
-  name = "Serve Angular"
-  cmd = "npx http-server project-todo-app/dist"
+    name = "Serve Angular"
+    cmd = "npx http-server project-todo-app/project-todo-app/dist"
