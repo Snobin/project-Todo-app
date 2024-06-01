@@ -1,25 +1,22 @@
 [build]
-  [build.steps]
-    [build.steps.springboot]
-    name = "Build Spring Boot"
-    builder = "java"
-    dir = "Project-Management"
-    [build.steps.springboot.env]
-    MAVEN_OPTS = "-Dmaven.repo.local=/opt/maven"
+  [[steps]]
+  name = "Build Angular"
+  builder = "node"
+  dir = "project-todo-app"
+  cmd = "npm install && npm run build"
 
-    [build.steps.angular]
-    name = "Build Angular"
-    builder = "node"
-    dir = "project-todo-app"
-    cmd = "npm install && npm run build"
+  [[steps]]
+  name = "Build Spring Boot"
+  builder = "java"
+  dir = "Project-Management"
+  [steps.env]
+  MAVEN_OPTS = "-Dmaven.repo.local=/opt/maven"
 
 [start]
-  [start.steps]
-    [start.steps.springboot]
-    name = "Start Spring Boot"
-    cmd = "java -jar project-todo-app/target/*.jar"
+  [[steps]]
+  name = "Start Spring Boot"
+  cmd = "java -jar Project-Management/target/*.jar"
 
-    [start.steps.angular]
-    name = "Serve Angular"
-    cmd = "npx http-server project-management-ui/dist"
-    # Ensure `http-server` is listed as a dev dependency in `project-management-ui/package.json`
+  [[steps]]
+  name = "Serve Angular"
+  cmd = "npx http-server project-todo-app/dist"
