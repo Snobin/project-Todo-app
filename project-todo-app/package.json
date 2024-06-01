@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "set NODE_OPTIONS=--openssl-legacy-provider  && gulp buildDev && ng serve ",
-    "publish": "set NODE_OPTIONS=--openssl-legacy-provider  && gulp build && ng build --prod",
+    "publish": "set NODE_OPTIONS=--openssl-legacy-provider  && gulp build && ng build --prod"
    
   },
   "private": true,
