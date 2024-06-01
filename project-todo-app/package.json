@@ -4,12 +4,13 @@
   "scripts": {
     "ng": "ng",
     
-    "build": "ng build",
+    "start": "ng serve --ssl true --ssl-key ./ssl/server.key --ssl-cert ./ssl/server.crt",
+"build": "ng build --ssl true --ssl-key ./ssl/server.key --ssl-cert ./ssl/server.crt",
+
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider  && gulp buildDev && ng serve ",
-    "publish": "set NODE_OPTIONS=--openssl-legacy-provider  && gulp build && ng build --prod"
+    "e2e": "ng e2e"
+
    
   },
   "private": true,
