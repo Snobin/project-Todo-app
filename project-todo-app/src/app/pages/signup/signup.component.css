@@ -49,3 +49,9 @@ color: red;
         background-position: 100% 0;
     }
 }
+.bg-image {
+    background-image: url('../../../assets/landscape.jpg');
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+    animation: moveBackground 10s ease-in-out infinite alternate;
+}

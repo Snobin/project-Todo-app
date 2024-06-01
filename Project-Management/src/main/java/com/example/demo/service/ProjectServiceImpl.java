@@ -34,11 +34,17 @@ public class ProjectServiceImpl implements ProjectService {
         project.setCreatedDate(LocalDateTime.now());
         projectRepository.save(project);
 
+        // Create a JSONObject containing the inserted project's details
+        JSONObject insertedProjectDetails = new JSONObject();
+        insertedProjectDetails.put("id", project.getId());
+        insertedProjectDetails.put("title", project.getTitle());
+        insertedProjectDetails.put("createdDate", project.getCreatedDate().toString());
+
         // Creating response DTO
         ResponseDto responseDto = new ResponseDto();
         responseDto.setMessage("Project created successfully.");
         responseDto.setStatus(true);
-        responseDto.setResponse(null);
+        responseDto.setResponse(insertedProjectDetails);
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }

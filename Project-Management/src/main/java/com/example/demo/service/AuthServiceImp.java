@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,19 +10,17 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.CustomUserDetails;
 import com.example.demo.dto.LoginDTO;
+import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SignupDTO;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.AuthRepository;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Service
 public class AuthServiceImp implements AuthService {
@@ -34,43 +31,32 @@ public class AuthServiceImp implements AuthService {
 	@Autowired
 	private AuthRepository repo;
 
-	public ResponseEntity<?> addUser(SignupDTO dto) {
-		UserEntity entity = new UserEntity();
-		try {
+	
 
-			String encodedPassword = passwordEncoder.encode(dto.getPassword());
-			entity.setPassword(encodedPassword);
-			entity.setUsername(dto.getEmail());
-			repo.save(entity);
-			return new ResponseEntity<>("Successfully Inserted", HttpStatus.OK);
-		} catch (Exception e) {
-			logger.error("Error:" + e.getMessage(), e);
-			return new ResponseEntity<>("Exception Occured", HttpStatus.OK);
+public ResponseEntity<ResponseDto> addUser(SignupDTO dto) {
+    Optional<UserEntity> existingUserOptional = repo.findByUsername(dto.getEmail());
+    if (existingUserOptional.isPresent()) {
+        ResponseDto responseDto = new ResponseDto("User with this email already exists", null, false);
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
+    }
 
-		}
-
-	}
-
-	public ResponseEntity<?> updateAdmin(SignupDTO dto) {
-//		String role = dto.getRole() == "false" ? "USER" : "ADMIN";
-		UserEntity entity = new UserEntity();
-		try {
-			Optional<UserEntity> obj = repo.findByUsername(dto.getUsername());
-			if (obj.isPresent()) {
-				entity = obj.get();
-
-				entity.setUsername(dto.getUsername());
-				repo.save(entity);
-			}
-			return new ResponseEntity<>("Successfully Updated", HttpStatus.OK);
-		} catch (Exception e) {
-			logger.error("Error:" + e.getMessage(), e);
-			return new ResponseEntity<>("Exception Occured", HttpStatus.OK);
-
-		}
-
-	}
-
+    UserEntity entity = new UserEntity();
+    try {
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        entity.setPassword(encodedPassword);
+        entity.setUsername(dto.getEmail());
+        repo.save(entity);
+        ResponseDto responseDto = new ResponseDto("Successfully Inserted", null, true);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    } catch (Exception e) {
+        logger.error("Error:" + e.getMessage(), e);
+        ResponseDto responseDto = new ResponseDto("Exception Occurred", null, false);
+        return new ResponseEntity<>(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+	
+	
+	
 	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		try {
@@ -82,7 +68,7 @@ public class AuthServiceImp implements AuthService {
 				UserEntity user = opt.get();
 //				Set<SimpleGrantedAuthority> authorities = Collections
 //						.singleton(new SimpleGrantedAuthority(user.getRole()));
-				return new CustomUserDetails( user.getUsername(), user.getPassword());
+				return new CustomUserDetails(user.getUsername(), user.getPassword());
 			}
 		} catch (Exception e) {
 			logger.error("Error:" + e.getMessage(), e);
@@ -112,9 +98,6 @@ public class AuthServiceImp implements AuthService {
 
 	}
 
-
-
-
 	public List<SignupDTO> getAllUsers() {
 		try {
 			List<UserEntity> users = repo.findAll();
@@ -128,7 +111,7 @@ public class AuthServiceImp implements AuthService {
 	private SignupDTO convertToDto(UserEntity user) {
 		try {
 			SignupDTO userDto = new SignupDTO();
-		
+
 			userDto.setUsername(user.getUsername());
 			return userDto;
 		} catch (Exception e) {
@@ -136,7 +119,5 @@ public class AuthServiceImp implements AuthService {
 			return null;
 		}
 	}
-
-	
 
 }

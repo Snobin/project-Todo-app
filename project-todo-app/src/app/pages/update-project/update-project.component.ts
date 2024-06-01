@@ -23,12 +23,12 @@ export class UpdateProjectComponent implements OnInit {
   constructor(private project: ProjectService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.pid = this.route.snapshot.params.pid;    
+    this.pid = this.route.snapshot.params.pid;
     this.getProjectById();
   }
-  getProjectById(){
-    this.project.getProjectById(this.pid).subscribe((data:any)=>{
-      this.Data.title=data.response.title;
+  getProjectById() {
+    this.project.getProjectById(this.pid).subscribe((data: any) => {
+      this.Data.title = data.response.title;
     })
   }
   update() {
@@ -39,7 +39,7 @@ export class UpdateProjectComponent implements OnInit {
       return;
     }
 
-    this.project.UpdateProject(this.Data,this.pid).subscribe(
+    this.project.UpdateProject(this.Data, this.pid).subscribe(
       (data: any) => {
         if (!data.details) {
           Swal.fire('Success', 'Project is Updated', 'success');

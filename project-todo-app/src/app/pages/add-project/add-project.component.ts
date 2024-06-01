@@ -40,7 +40,7 @@ export class AddProjectComponent implements OnInit {
         this.Data = {
           title: '',          
         }
-        const projectId=data.pid;
+        const projectId=data.response.id;
         this.router.navigate(['/todo/'+projectId]);
       }else{
           if(data.details){

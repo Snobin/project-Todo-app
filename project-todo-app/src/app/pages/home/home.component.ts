@@ -27,7 +27,7 @@ export(id: any) {
       this.projectdata = data.response.Projects;
       console.log(this.projectdata);     
     }, (error) => {
-      Swal.fire('Error!', 'Error in deleting quiz. Please try again later.', 'error');
+      // Swal.fire('Error!', 'Error in data fetching. Please try again later.', 'error');
     }
     )
   }

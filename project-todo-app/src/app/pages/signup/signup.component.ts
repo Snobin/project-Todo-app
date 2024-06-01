@@ -47,7 +47,14 @@ export class SignupComponent implements OnInit {
       (data: any) => {
         if(!data.details)
         {
-        }else{
+          this.router.navigate(['/login'])
+        }else if (data.message === "User with this email already exists") {
+          this.snack.open("User with this email already exists", "", {
+            duration: 2000,
+          });
+        }
+        
+        else{
           data.details.forEach((element) => {
             var key = Object.keys(element)[0];
             this.validationMessage[key] = element[key];
@@ -56,10 +63,16 @@ export class SignupComponent implements OnInit {
       }
       },
       (error) => {
-        console.log(error);
-        this.snack.open("Invalid Details....Try again", "", {
-          duration: 2000,
-        });
+        if (error.message === "User with this email already exists") {
+          this.snack.open("User with this email already exists", "", {
+            duration: 2000,
+          });
+        }else{
+          this.snack.open("Invalid Details....Try again", "", {
+            duration: 2000,
+          });
+
+        }
       }
     )
   }

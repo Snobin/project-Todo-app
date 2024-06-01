@@ -114,4 +114,8 @@ export class TodoListComponent implements OnInit {
       }
     });
   }
+  back() {
+    this.router.navigate(['/home'])
+  }
+
 }
