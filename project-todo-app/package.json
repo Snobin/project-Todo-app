@@ -3,15 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    
     "start": "ng serve --ssl true --ssl-key ./ssl/server.key --ssl-cert ./ssl/server.crt",
     "build": "ng build --prod",
-
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
-
-   
   },
   "private": true,
   "dependencies": {
