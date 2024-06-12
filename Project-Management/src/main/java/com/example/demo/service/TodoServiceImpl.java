@@ -39,7 +39,6 @@ public class TodoServiceImpl implements TodoService {
             todo.setProject(project);
             todoRepository.save(todo);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo added successfully.");
             responseDto.setStatus(true);
@@ -50,7 +49,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Project not found.");
             responseDto.setStatus(false);
@@ -70,7 +68,6 @@ public class TodoServiceImpl implements TodoService {
             todo.setUpdatedDate(LocalDateTime.now());
             todoRepository.save(todo);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo updated successfully.");
             responseDto.setStatus(true);
@@ -78,7 +75,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo not found.");
             responseDto.setStatus(false);
@@ -102,7 +98,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.NO_CONTENT);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo not found.");
             responseDto.setStatus(false);
@@ -122,7 +117,6 @@ public class TodoServiceImpl implements TodoService {
             todo.setUpdatedDate(LocalDateTime.now());
             todoRepository.save(todo);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo marked as complete successfully.");
             responseDto.setStatus(true);
@@ -130,7 +124,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo not found.");
             responseDto.setStatus(false);
@@ -148,7 +141,6 @@ public class TodoServiceImpl implements TodoService {
             todo.setUpdatedDate(LocalDateTime.now());
             todoRepository.save(todo);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo marked as pending successfully.");
             responseDto.setStatus(true);
@@ -156,7 +148,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo not found.");
             responseDto.setStatus(false);
@@ -171,10 +162,8 @@ public class TodoServiceImpl implements TodoService {
     public ResponseEntity<ResponseDto> getTodoById(Integer pid, Integer tid) {
         Optional<Todo> optionalTodo = todoRepository.findByIdAndProject_Id(tid, pid);
         if (optionalTodo.isPresent()) {
-            // Todo found
             Todo todo = optionalTodo.get();
             
-            // Creating JSON object for the todo
             JSONObject todoJson = new JSONObject();
             todoJson.put("id", todo.getId());
             todoJson.put("description", todo.getDescription());
@@ -182,12 +171,10 @@ public class TodoServiceImpl implements TodoService {
             todoJson.put("createdDate", todo.getCreatedDate());
             todoJson.put("updatedDate", todo.getUpdatedDate());
             
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto("Todo found.", todoJson, true);
             
             return ResponseEntity.ok().body(responseDto);
         } else {
-            // Todo not found
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDto("Todo not found.", null, false));
         }
@@ -203,7 +190,6 @@ public class TodoServiceImpl implements TodoService {
             todo.setUpdatedDate(LocalDateTime.now());
             todoRepository.save(todo);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo updated successfully.");
             responseDto.setStatus(true);
@@ -211,7 +197,6 @@ public class TodoServiceImpl implements TodoService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Todo not found.");
             responseDto.setStatus(false);

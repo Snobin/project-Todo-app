@@ -18,6 +18,7 @@ public class Project {
     private Integer id;
     private String title;
     private LocalDateTime createdDate;
+    private String createdBy;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)    
     @JsonManagedReference
@@ -55,22 +56,35 @@ public class Project {
 		this.todos = todos;
 	}
 
-	public Project(Integer id, String title, LocalDateTime createdDate, List<Todo> todos) {
+	
+
+	public Project(Integer id, String title, LocalDateTime createdDate, String createdBy, List<Todo> todos) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.createdDate = createdDate;
+		this.createdBy = createdBy;
 		this.todos = todos;
 	}
 
 	public Project() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
+	
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", title=" + title + ", createdDate=" + createdDate + ", todos=" + todos + "]";
+		return "Project [id=" + id + ", title=" + title + ", createdDate=" + createdDate + ", createdBy=" + createdBy
+				+ ", todos=" + todos + "]";
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
     
     

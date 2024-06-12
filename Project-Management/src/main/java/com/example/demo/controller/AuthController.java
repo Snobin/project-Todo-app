@@ -1,23 +1,15 @@
 package com.example.demo.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.CustomUserDetails;
-import com.example.demo.dto.JwtResponseDTO;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.SignupDTO;
-import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.AuthRepository;
 import com.example.demo.service.AuthService;
-import com.example.demo.util.JwtUtil;
 
 import jakarta.validation.Valid;
 
@@ -25,23 +17,19 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
-    
-    @Autowired
-    private AuthRepository authRepository;
+	@Autowired
+	private AuthService authService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody SignupDTO signupDTO) {
-        return authService.addUser(signupDTO);
-    }
+	@PostMapping("/signup")
+	public ResponseEntity<?> signup(@Valid @RequestBody SignupDTO signupDTO) {
+		return authService.addUser(signupDTO);
+	}
 
-    @PostMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<?> LoginandGenerate(@Valid @RequestBody LoginDTO dto) {
-    	System.out.println("fcgh");
+<<<<<<< HEAD
+		return authService.LoginandGenerate(dto);
+=======
 		try {
 			if (authService.checkemailpassword(dto)) {
 				Optional<UserEntity> username = authRepository.findByUsername(dto.getEmail());
@@ -60,5 +48,6 @@ public class AuthController {
 		} catch (Exception e) {
 			return new ResponseEntity<>("Error during login", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+>>>>>>> 6fa0a469838150ea3d5bea71eb9d8730f1db0867
 	}
 }

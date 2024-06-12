@@ -16,11 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.CustomUserDetails;
+import com.example.demo.dto.JwtResponseDTO;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.SignupDTO;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.AuthRepository;
+import com.example.demo.util.JwtUtil;
 
 @Service
 public class AuthServiceImp implements AuthService {
@@ -31,32 +33,40 @@ public class AuthServiceImp implements AuthService {
 	@Autowired
 	private AuthRepository repo;
 
-	
+	@Autowired
+	private AuthRepository authRepository;
 
-public ResponseEntity<ResponseDto> addUser(SignupDTO dto) {
-    Optional<UserEntity> existingUserOptional = repo.findByUsername(dto.getEmail());
-    if (existingUserOptional.isPresent()) {
-        ResponseDto responseDto = new ResponseDto("User with this email already exists", null, false);
-        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
-    }
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+	public static String username;
+	
+	public String getUsername() {
+		return username;
+	}
 
-    UserEntity entity = new UserEntity();
-    try {
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        entity.setPassword(encodedPassword);
-        entity.setUsername(dto.getEmail());
-        repo.save(entity);
-        ResponseDto responseDto = new ResponseDto("Successfully Inserted", null, true);
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
-    } catch (Exception e) {
-        logger.error("Error:" + e.getMessage(), e);
-        ResponseDto responseDto = new ResponseDto("Exception Occurred", null, false);
-        return new ResponseEntity<>(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
-	
-	
-	
+	public ResponseEntity<ResponseDto> addUser(SignupDTO dto) {
+		Optional<UserEntity> existingUserOptional = repo.findByUsername(dto.getEmail());
+		if (existingUserOptional.isPresent()) {
+			ResponseDto responseDto = new ResponseDto("User with this email already exists", null, false);
+			return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
+		}
+
+		UserEntity entity = new UserEntity();
+		try {
+			String encodedPassword = passwordEncoder.encode(dto.getPassword());
+			entity.setPassword(encodedPassword);
+			entity.setUsername(dto.getEmail());
+			repo.save(entity);
+			ResponseDto responseDto = new ResponseDto("Successfully Inserted", null, true);
+			return new ResponseEntity<>(responseDto, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("Error:" + e.getMessage(), e);
+			ResponseDto responseDto = new ResponseDto("Exception Occurred", null, false);
+			return new ResponseEntity<>(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		try {
@@ -66,8 +76,6 @@ public ResponseEntity<ResponseDto> addUser(SignupDTO dto) {
 				throw new UsernameNotFoundException("User with username: " + username + " not found!");
 			} else {
 				UserEntity user = opt.get();
-//				Set<SimpleGrantedAuthority> authorities = Collections
-//						.singleton(new SimpleGrantedAuthority(user.getRole()));
 				return new CustomUserDetails(user.getUsername(), user.getPassword());
 			}
 		} catch (Exception e) {
@@ -117,6 +125,29 @@ public ResponseEntity<ResponseDto> addUser(SignupDTO dto) {
 		} catch (Exception e) {
 			logger.error("Error:" + e.getMessage(), e);
 			return null;
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> LoginandGenerate(LoginDTO dto) {
+		try {
+			if (checkemailpassword(dto)) {
+				username=dto.getEmail();
+				System.out.println(dto.getEmail());
+				Optional<UserEntity> username = authRepository.findByUsername(dto.getEmail());
+				UserEntity obj = username.get();
+				final CustomUserDetails userDetails = loadUserByUsername(obj.getUsername());
+				String token = jwtUtil.generateToken(userDetails);
+				JwtResponseDTO jwt = new JwtResponseDTO();
+				jwt.setToken(token);
+				jwt.setUsername(userDetails.getUsername());
+				return new ResponseEntity<>(jwt, HttpStatus.OK);
+			} else {
+
+				return new ResponseEntity<>("Email or Password is Incorrect", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error during login", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

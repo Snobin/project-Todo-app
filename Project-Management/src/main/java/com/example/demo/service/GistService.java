@@ -78,7 +78,7 @@ public class GistService {
         int index = 1;
         for (Todo todo : project.getTodos()) {
             if (status.equals(todo.getStatus())) {
-                sb.append(index).append(". [").append(status.equals("completed") ? "✓" : " ").append("] ").append(todo.getDescription()).append("\n");
+                sb.append(index).append(". [").append(status.equals("completed") ? "x" : " ").append("] ").append(todo.getDescription()).append("\n");
                 index++;
             }
         }

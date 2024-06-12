@@ -10,9 +10,10 @@ import com.example.demo.entity.Todo;
 
 public interface TodoRepository extends JpaRepository<Todo, Integer> {
 
-    List<Todo> findByProject(Project project);
-    List<Todo> findByProjectId(Integer projectId);
-    Optional<Todo> findByIdAndProject_Id(Integer id, Integer projectId);
+	List<Todo> findByProject(Project project);
 
+	List<Todo> findByProjectId(Integer projectId);
+
+	Optional<Todo> findByIdAndProject_Id(Integer id, Integer projectId);
 
 }

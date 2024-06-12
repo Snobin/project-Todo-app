@@ -20,7 +20,9 @@ export class UpdateProjectComponent implements OnInit {
     title: '',
   };
   pid: any;
-  constructor(private project: ProjectService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
+  constructor(private project: ProjectService,
+    private snack: MatSnackBar, private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.pid = this.route.snapshot.params.pid;

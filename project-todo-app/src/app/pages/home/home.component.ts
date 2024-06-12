@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 export class HomeComponent implements OnInit {
 export(id: any) {
   this.project.exportGist(id).subscribe((data: any) => {
+    window.location.href="";
     Swal.fire('Success', 'Exported project summary as gist.', 'success');
   }, (error) => {
     Swal.fire('Error!', 'Error in exporting gist. Please try again later.', 'error');

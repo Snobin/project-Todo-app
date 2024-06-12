@@ -26,21 +26,23 @@ public class ProjectServiceImpl implements ProjectService {
     
     @Autowired
     private TodoRepository todoRepository;
-
+    @Autowired
+    private AuthServiceImp authService;
+    
     @Override
     public ResponseEntity<ResponseDto> createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setTitle(projectDto.getTitle());
         project.setCreatedDate(LocalDateTime.now());
+        project.setCreatedBy(authService.getUsername());
+        System.out.println(project.getCreatedBy());
         projectRepository.save(project);
 
-        // Create a JSONObject containing the inserted project's details
         JSONObject insertedProjectDetails = new JSONObject();
         insertedProjectDetails.put("id", project.getId());
         insertedProjectDetails.put("title", project.getTitle());
         insertedProjectDetails.put("createdDate", project.getCreatedDate().toString());
 
-        // Creating response DTO
         ResponseDto responseDto = new ResponseDto();
         responseDto.setMessage("Project created successfully.");
         responseDto.setStatus(true);
@@ -51,9 +53,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ResponseEntity<ResponseDto> getAllProjects() {
-        List<Project> projects = projectRepository.findAll();
-//        System.out.println(projects.toString());
-        // Creating response DTO
+        List<Project> projects = projectRepository.findByCreatedBy(authService.getUsername());
+
         ResponseDto responseDto = new ResponseDto();
         responseDto.setMessage("Projects retrieved successfully.");
         responseDto.setStatus(true);
@@ -70,7 +71,6 @@ public class ProjectServiceImpl implements ProjectService {
             Project project = optionalProject.get();
             List<Todo> todos = todoRepository.findByProjectId(projectId);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Project found.");
             responseDto.setStatus(true);
@@ -80,7 +80,6 @@ public class ProjectServiceImpl implements ProjectService {
             projectData.put("title", project.getTitle());
             projectData.put("createdDate", project.getCreatedDate());
 
-            // Adding todos to the response
             JSONArray todosArray = new JSONArray();
             for (Todo todo : todos) {
                 JSONObject todoData = new JSONObject();
@@ -97,7 +96,6 @@ public class ProjectServiceImpl implements ProjectService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Project not found.");
             responseDto.setStatus(false);
@@ -139,7 +137,6 @@ public class ProjectServiceImpl implements ProjectService {
         if (optionalProject.isPresent()) {
             projectRepository.deleteById(id);
 
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Project deleted successfully.");
             responseDto.setStatus(true);
@@ -147,7 +144,6 @@ public class ProjectServiceImpl implements ProjectService {
 
             return new ResponseEntity<>(responseDto, HttpStatus.NO_CONTENT);
         } else {
-            // Creating response DTO
             ResponseDto responseDto = new ResponseDto();
             responseDto.setMessage("Project not found.");
             responseDto.setStatus(false);
@@ -167,7 +163,6 @@ public class ProjectServiceImpl implements ProjectService {
 		    if (optionalProject.isPresent()) {
 		        Project project = optionalProject.get();
 		        
-		        // Creating response DTO
 		        ResponseDto responseDto = new ResponseDto();
 		        responseDto.setMessage("Project found.");
 		        responseDto.setStatus(true);
@@ -179,7 +174,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 		        return new ResponseEntity<>(responseDto, HttpStatus.OK);
 		    } else {
-		        // Creating response DTO
 		        ResponseDto responseDto = new ResponseDto();
 		        responseDto.setMessage("Project not found.");
 		        responseDto.setStatus(false);

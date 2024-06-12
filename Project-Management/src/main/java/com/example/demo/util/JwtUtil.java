@@ -34,7 +34,6 @@ public class JwtUtil {
 
 	@SuppressWarnings("deprecation")
 	private String createToken(CustomUserDetails customUser, Map<String, Object> additionalClaims) {
-		System.out.println(customUser);
 		return Jwts.builder().setSubject(customUser.getUsername()).claim("customUser", customUser)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 60000000))

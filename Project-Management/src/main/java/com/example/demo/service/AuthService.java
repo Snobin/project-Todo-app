@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.dto.CustomUserDetails;
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.dto.SignupDTO;
+
+import jakarta.validation.Valid;
 
 public interface AuthService {
 
@@ -19,4 +22,5 @@ public interface AuthService {
 	
 	public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
+	public ResponseEntity<?> LoginandGenerate(  LoginDTO dto);
 }
