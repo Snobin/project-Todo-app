@@ -27,27 +27,9 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> LoginandGenerate(@Valid @RequestBody LoginDTO dto) {
-<<<<<<< HEAD
+
 		return authService.LoginandGenerate(dto);
-=======
-		try {
-			if (authService.checkemailpassword(dto)) {
-				Optional<UserEntity> username = authRepository.findByUsername(dto.getEmail());
-				UserEntity obj = username.get();
-				final CustomUserDetails userDetails = authService.loadUserByUsername(obj.getUsername());
-				System.out.println(userDetails.toString());
-				String token = jwtUtil.generateToken(userDetails);
-				JwtResponseDTO jwt = new JwtResponseDTO();
-				jwt.setToken(token);
-				jwt.setUsername(userDetails.getUsername());
-				return new ResponseEntity<>(jwt, HttpStatus.OK);
-			} else {
-				
-				return new ResponseEntity<>("Email or Password is Incorrect", HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			return new ResponseEntity<>("Error during login", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
->>>>>>> 6fa0a469838150ea3d5bea71eb9d8730f1db0867
+
+
 	}
 }
